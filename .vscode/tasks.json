@@ -1,0 +1,187 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "🔧 Crear entorno virtual",
+      "type": "shell",
+      "command": "python -m venv .venv",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📦 Instalar dependencias",
+      "type": "shell",
+      "command": ".venv\\Scripts\\pip.exe install -r requirements.txt",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "dependsOn": "🔧 Crear entorno virtual",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "⚙️ Setup completo (venv + deps + .env)",
+      "type": "shell",
+      "command": "python -m venv .venv && .venv\\Scripts\\pip.exe install -r requirements.txt && if not exist .env copy .env.example .env && echo. && echo === Setup completo. Edita .env con tus API keys ===",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🧪 Ejecutar tests",
+      "type": "shell",
+      "command": ".venv\\Scripts\\python.exe -m pytest tests/ -v --tb=short",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}"
+        }
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📊 Dashboard (Streamlit)",
+      "type": "shell",
+      "command": ".venv\\Scripts\\python.exe -m streamlit run dashboard/app.py --server.port=8501",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}"
+        }
+      },
+      "group": "none",
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": {
+        "pattern": {
+          "regexp": ".",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Collecting usage statistics",
+          "endsPattern": "You can now view"
+        }
+      }
+    },
+    {
+      "label": "⚙️ Pipeline (background)",
+      "type": "shell",
+      "command": ".venv\\Scripts\\python.exe run.py --pipeline-only",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}"
+        }
+      },
+      "group": "none",
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🚀 Full Stack",
+      "dependsOn": [
+        "⚙️ Pipeline (background)",
+        "📊 Dashboard (Streamlit)"
+      ],
+      "dependsOrder": "sequence",
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🧹 Limpiar __pycache__",
+      "type": "shell",
+      "command": "for /r . %d in (__pycache__) do @if exist \"%d\" rd /s /q \"%d\"",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "none",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📋 Ver .env actual",
+      "type": "shell",
+      "command": "type .env",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "none",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🔍 Verificar conexión Polygon",
+      "type": "shell",
+      "command": ".venv\\Scripts\\python.exe -c \"from execution_layer.wallet_connector import WalletConnector; wc = WalletConnector(); print('Polygon conectado:', wc.is_connected())\"",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}"
+        }
+      },
+      "group": "none",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

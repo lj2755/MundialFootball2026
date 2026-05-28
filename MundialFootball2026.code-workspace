@@ -1,0 +1,54 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "⚽ MundialFootball2026"
+    }
+  ],
+  "settings": {
+    "workbench.colorTheme": "One Dark Pro",
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.fontFamily": "'Fira Code', 'Cascadia Code', Consolas, monospace",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 14,
+    "editor.lineHeight": 1.6,
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+    "python.analysis.extraPaths": ["${workspaceFolder}"],
+    "python.envFile": "${workspaceFolder}/.env",
+    "terminal.integrated.defaultProfile.windows": "PowerShell"
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "ms-python.black-formatter",
+      "ms-python.vscode-pylance",
+      "mikestead.dotenv",
+      "usernamehw.errorlens",
+      "eamodio.gitlens"
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "compounds": [
+      {
+        "name": "🏟️ Full Stack",
+        "configurations": [
+          "🌐 Webhook Server",
+          "⚙️ Solo Pipeline (datos + IA)",
+          "📊 Solo Dashboard (Streamlit)"
+        ]
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "inputs": [
+      {
+        "id": "walletAddress",
+        "type": "promptString",
+        "description": "Dirección de wallet Polygon (0x...)",
+        "default": "0x"
+      }
+    ]
+  }
+}
